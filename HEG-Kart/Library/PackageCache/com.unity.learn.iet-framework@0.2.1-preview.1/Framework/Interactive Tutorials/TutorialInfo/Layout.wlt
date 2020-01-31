@@ -400,7 +400,7 @@ MonoBehaviour:
   m_LastFolders:
   - Assets/UTech/MG-Karting
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\lucas\HEG-Kart
+  m_LastProjectPath: /Users/anttinieminen/GitHubEnterprise/kart-template
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
