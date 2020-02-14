@@ -211,8 +211,10 @@ namespace KartGame.Track
                     }
                 }
 
-                if (CanEndRace ())
-                    StopRace ();
+                if (CanEndRace())
+                {
+                    StopRace();
+                }
 
                 racer.HitStartFinishLine ();
             }
@@ -222,9 +224,19 @@ namespace KartGame.Track
         {
             foreach (KeyValuePair<IRacer, Checkpoint> racerNextCheckpoint in m_RacerNextCheckpoints)
             {
-                if (racerNextCheckpoint.Key.GetCurrentLap () < raceLapTotal)
+                if (racerNextCheckpoint.Key.GetCurrentLap() < raceLapTotal)
+                {
+                    GetDistances getDistances = GameObject.Find("sensors_object").GetComponent<GetDistances>();
+                    getDistances.PostTrainingUnits();
+                    getDistances.ClearTrainingUnits();
                     return false;
+                }
             }
+            /*
+            GetDistances getDistances = GameObject.Find("sensors_object").GetComponent<GetDistances>();
+            getDistances.PostTrainingUnits();
+            getDistances.ClearTrainingUnits();
+            */
 
             return true;
         }
