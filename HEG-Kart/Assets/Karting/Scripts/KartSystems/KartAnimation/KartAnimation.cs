@@ -138,6 +138,8 @@ namespace KartGame.KartSystems
 
         void FixedUpdate ()
         {
+            m_Input = input as IInput;
+
             m_SmoothedSteeringInput = Mathf.MoveTowards (m_SmoothedSteeringInput, m_Input.Steering, steeringAnimationDamping * Time.deltaTime);
 
             playerAnimator.SetFloat (k_HashSteering, m_SmoothedSteeringInput);

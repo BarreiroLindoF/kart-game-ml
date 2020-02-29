@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using KartGame.Track;
 using UnityEngine;
 using UnityEngine.Events;
@@ -36,7 +37,6 @@ namespace KartGame.KartSystems
         [RequireInterface (typeof(IInput))]
         [Tooltip ("A reference to the an object implementing the IInput class to be used to control the kart.")]
         public Object input;
-
         [Tooltip ("A reference to a transform representing the origin of a ray to help determine if the kart is grounded.  This is the front of a diamond formation.")]
         public Transform frontGroundRaycast;
         [Tooltip ("A reference to a transform representing the origin of a ray to help determine if the kart is grounded.  This is the right of a diamond formation.")]
@@ -119,6 +119,7 @@ namespace KartGame.KartSystems
         void Start ()
         {
             m_Input = input as IInput;
+
             m_Rigidbody = GetComponent<Rigidbody> ();
             m_Capsule = GetComponent<CapsuleCollider> ();
             m_Racer = GetComponent<IRacer> ();
@@ -132,7 +133,9 @@ namespace KartGame.KartSystems
 
         void FixedUpdate ()
         {
-            if(Mathf.Approximately (Time.timeScale, 0f))
+            m_Input = input as IInput;
+
+            if (Mathf.Approximately (Time.timeScale, 0f))
                 return;
             
             if (m_RepositionPositionDelta.sqrMagnitude > float.Epsilon || m_RepositionRotationDelta != Quaternion.identity)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using KartGame.KartSystems;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -30,6 +31,26 @@ namespace KartGame.UI
         public void LoadLevel(string levelName)
         {
             SceneManager.LoadScene(levelName);
+        }
+
+        public void ChangeControl(string control_name)
+        {
+            switch (control_name) {
+                case "keyboard":
+                    GameObject.Find("Kart").GetComponent<KartMovement>().input = GameObject.Find("Kart").GetComponent<KeyboardInput>();
+                    GameObject.Find("Kart").GetComponent<KartAnimation>().input = GameObject.Find("Kart").GetComponent<KeyboardInput>();
+                    break;
+                case "steeringWheel":
+                    GameObject.Find("Kart").GetComponent<KartMovement>().input = GameObject.Find("Kart").GetComponent<SteeringInput>();
+                    GameObject.Find("Kart").GetComponent<KartAnimation>().input = GameObject.Find("Kart").GetComponent<SteeringInput>();
+                    break;
+                case "gamepad":
+                    GameObject.Find("Kart").GetComponent<KartMovement>().input = GameObject.Find("Kart").GetComponent<GamepadInput>();
+                    GameObject.Find("Kart").GetComponent<KartAnimation>().input = GameObject.Find("Kart").GetComponent<GamepadInput>();
+                    break;
+                default:
+                    break;
+            }
         }
 
         void OnEnable()
