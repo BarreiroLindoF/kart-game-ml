@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace KartGame.UI
 {
@@ -24,6 +25,11 @@ namespace KartGame.UI
                 if (panel.activeSelf != active)
                     panel.SetActive(active);
             }
+        }
+
+        public void LoadLevel(string levelName)
+        {
+            SceneManager.LoadScene(levelName);
         }
 
         void OnEnable()
