@@ -26,12 +26,12 @@ model.add(Dense(units=2, activation='softsign'))
 
 model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
 '''
-inputs = Input(shape=(21,))
+inputs = Input(shape=(5,))
 
-turnBranch = Dense(units=15, activation='relu', input_dim=inputs.shape[0])(inputs)
+turnBranch = Dense(units=50, activation='relu', input_dim=inputs.shape[0])(inputs)
 turnBranch = Dense(units=1, activation='softsign', name="turn_output")(turnBranch)
 
-accelerationBranch = Dense(units=15, activation='relu', input_dim=inputs.shape[0])(inputs)
+accelerationBranch = Dense(units=50, activation='relu', input_dim=inputs.shape[0])(inputs)
 accelerationBranch = Dense(units=1, activation='softsign', name="acceleration_output")(accelerationBranch)
 
 model = Model(inputs=inputs, outputs=[turnBranch, accelerationBranch])
@@ -177,8 +177,11 @@ if __name__ == '__main__':
         gpu_options=tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
         # device_count = {'GPU': 1}
     )
-    config.gpu_options.allow_growth = True
-    session = tf.Session(config=config)
+    print("After config")
+    #config.gpu_options.allow_growth = True
+    #session = tf.Session(config=config)
+    print("After session")
     ##
 
     app.run(host='0.0.0.0', debug=True)
+    print("After app run")
