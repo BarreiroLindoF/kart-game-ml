@@ -129,7 +129,26 @@ namespace KartGame.KartSystems
 
             m_KartMovement = kartMovement as IKartInfo;
 
-            m_Input = input as IInput;
+            if (PlayerPrefs.GetString("input") == "" || PlayerPrefs.GetString("input") == null)
+            {
+                m_Input = GetComponent<KeyboardInput>();
+            }
+            else
+            {
+                switch (PlayerPrefs.GetString("input"))
+                {
+                    case "keyboard":
+                        m_Input = GetComponent<KeyboardInput>();
+                        break;
+                    case "steeringWheel":
+                        m_Input = GetComponent<SteeringInput>();
+                        break;
+                    case "gamepad":
+                        m_Input = GetComponent<GamepadInput>();
+                        break;
+                }
+            }
+
             m_DefaultSteeringWheelLocalRotation = steeringWheel.localRotation;
             m_NormalizedSteeringWheelRotationAxis = steeringWheelRotationAxis.normalized;
             m_InverseFrontWheelRadius = 1f / frontWheelRadius;
@@ -138,7 +157,25 @@ namespace KartGame.KartSystems
 
         void FixedUpdate ()
         {
-            m_Input = input as IInput;
+            if (PlayerPrefs.GetString("input") == "" || PlayerPrefs.GetString("input") == null)
+            {
+                m_Input = GetComponent<KeyboardInput>();
+            }
+            else
+            {
+                switch (PlayerPrefs.GetString("input"))
+                {
+                    case "keyboard":
+                        m_Input = GetComponent<KeyboardInput>();
+                        break;
+                    case "steeringWheel":
+                        m_Input = GetComponent<SteeringInput>();
+                        break;
+                    case "gamepad":
+                        m_Input = GetComponent<GamepadInput>();
+                        break;
+                }
+            }
 
             m_SmoothedSteeringInput = Mathf.MoveTowards (m_SmoothedSteeringInput, m_Input.Steering, steeringAnimationDamping * Time.deltaTime);
 

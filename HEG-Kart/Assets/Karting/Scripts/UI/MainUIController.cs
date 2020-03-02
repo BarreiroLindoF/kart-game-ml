@@ -28,7 +28,7 @@ namespace KartGame.UI
             }
         }
 
-        public void LoadLevel(string levelName)
+        public  void LoadLevel(string levelName)
         {
             SceneManager.LoadScene(levelName);
         }
@@ -37,20 +37,33 @@ namespace KartGame.UI
         {
             switch (control_name) {
                 case "keyboard":
+                    PlayerPrefs.SetString("input", "keyboard");
                     GameObject.Find("Kart").GetComponent<KartMovement>().input = GameObject.Find("Kart").GetComponent<KeyboardInput>();
                     GameObject.Find("Kart").GetComponent<KartAnimation>().input = GameObject.Find("Kart").GetComponent<KeyboardInput>();
                     break;
                 case "steeringWheel":
+                    PlayerPrefs.SetString("input", "steeringWheel");
                     GameObject.Find("Kart").GetComponent<KartMovement>().input = GameObject.Find("Kart").GetComponent<SteeringInput>();
                     GameObject.Find("Kart").GetComponent<KartAnimation>().input = GameObject.Find("Kart").GetComponent<SteeringInput>();
                     break;
                 case "gamepad":
+                    PlayerPrefs.SetString("input", "gamepad");
                     GameObject.Find("Kart").GetComponent<KartMovement>().input = GameObject.Find("Kart").GetComponent<GamepadInput>();
                     GameObject.Find("Kart").GetComponent<KartAnimation>().input = GameObject.Find("Kart").GetComponent<GamepadInput>();
                     break;
                 default:
                     break;
             }
+        }
+
+        public void setSpeed(float speed)
+        {
+            PlayerPrefs.SetFloat("kartSpeed", speed);
+        }
+
+        public void setAcceleration(float acceleration)
+        {
+            PlayerPrefs.SetFloat("kartAcceleration", acceleration);
         }
 
         void OnEnable()

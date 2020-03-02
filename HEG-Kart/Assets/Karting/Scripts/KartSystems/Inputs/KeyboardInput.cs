@@ -34,32 +34,38 @@ namespace KartGame.KartSystems
             get { return m_HopHeld; }
         }
 
-        float m_Acceleration;
-        float m_Steering;
+        public float m_Acceleration;
+        public float m_Steering;
         bool m_HopPressed;
         bool m_HopHeld;
         bool m_BoostPressed;
         bool m_FirePressed;
+        int frameCount = 0;
+
 
         bool m_FixedUpdateHappened;
 
         void Update ()
         {
-            if (Input.GetKey (KeyCode.UpArrow))
-                m_Acceleration = 1f;
-            else if (Input.GetKey (KeyCode.DownArrow))
-                m_Acceleration = -1f;
-            else
-                m_Acceleration = 0f;
+            if (PlayerPrefs.GetString("IA") == "false")
+            {
+                if (Input.GetKey(KeyCode.UpArrow))
+                    m_Acceleration = 1f;
+                else if (Input.GetKey(KeyCode.DownArrow))
+                    m_Acceleration = -1f;
+                else
+                    m_Acceleration = 0f;
 
-            if (Input.GetKey (KeyCode.LeftArrow) && !Input.GetKey (KeyCode.RightArrow))
-                m_Steering = -1f;
-            else if (!Input.GetKey (KeyCode.LeftArrow) && Input.GetKey (KeyCode.RightArrow))
-                m_Steering = 1f;
-            else
-                m_Steering = 0f;
+                if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+                    m_Steering = -1f;
+                else if (!Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow))
+                    m_Steering = 1f;
+                else
+                    m_Steering = 0f;
 
-            m_HopHeld = Input.GetKey (KeyCode.Space);
+                m_HopHeld = Input.GetKey(KeyCode.Space);
+
+            }
 
             if (m_FixedUpdateHappened)
             {
@@ -70,13 +76,25 @@ namespace KartGame.KartSystems
                 m_FirePressed = false;
             }
 
-            m_HopPressed |= Input.GetKeyDown (KeyCode.Space);
-            m_BoostPressed |= Input.GetKeyDown (KeyCode.RightShift);
-            m_FirePressed |= Input.GetKeyDown (KeyCode.RightControl);
+            m_HopPressed |= Input.GetKeyDown(KeyCode.Space);
+            m_BoostPressed |= Input.GetKeyDown(KeyCode.RightShift);
+            m_FirePressed |= Input.GetKeyDown(KeyCode.RightControl);
+
         }
 
         void FixedUpdate ()
         {
+            frameCount++;
+
+            if (PlayerPrefs.GetString("IA") == "true"){
+
+                if (frameCount % 5 == 0)
+                {
+                    Component component = GameObject.Find("Brain").GetComponent("Brain");
+                    component.SendMessage("GetDirection", this);
+                }
+            }
+
             m_FixedUpdateHappened = true;
         }
     }

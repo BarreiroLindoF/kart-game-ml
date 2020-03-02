@@ -48,7 +48,7 @@ namespace KartGame.KartSystems
 
         private void Start()
         {
-            print(LogitechGSDK.LogiSteeringInitialize(false));
+            //print(LogitechGSDK.LogiSteeringInitialize(false));
         }
 
         void Update ()
@@ -74,32 +74,6 @@ namespace KartGame.KartSystems
                 m_FirePressed = false;
             }
 
-
-            /*
-            if (Input.GetButton ("Brake"))
-                m_Acceleration = -1f;
-            else if (Input.GetButton ("Accelerate"))
-                m_Acceleration = 1f;
-            else
-                m_Acceleration = 0f;
-
-            m_Steering = Input.GetAxis ("Horizontal");
-
-            m_HopHeld = Input.GetButton ("Hop");
-
-            if (m_FixedUpdateHappened)
-            {
-                m_FixedUpdateHappened = false;
-
-                m_HopPressed = false;
-                m_BoostPressed = false;
-                m_FirePressed = false;
-            }
-
-            m_HopPressed |= Input.GetButtonDown ("Hop");
-            m_BoostPressed |= Input.GetButtonDown ("Boost");
-            m_FirePressed |= Input.GetButtonDown ("Fire");
-            */
         }
 
         void FixedUpdate ()

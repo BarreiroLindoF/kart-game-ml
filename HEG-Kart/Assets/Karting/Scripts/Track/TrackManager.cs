@@ -83,7 +83,8 @@ namespace KartGame.Track
 
         void Awake ()
         {
-            if(checkpoints.Count < 3)
+
+            if (checkpoints.Count < 3)
                 Debug.LogWarning ("There are currently " + checkpoints.Count + " checkpoints set on the Track Manager.  A minimum of 3 is recommended but kart control will not be enabled with 0.");
             
             m_HistoricalBestLap = TrackRecord.Load (trackName, 1);
@@ -108,7 +109,17 @@ namespace KartGame.Track
 
         void Start ()
         {
-            if(checkpoints.Count == 0)
+            if (PlayerPrefs.GetString("IA") == "true")
+            {
+                GameObject.Find("Brain").AddComponent<Brain>();
+                GameObject.Find("sensors_object").AddComponent<GetDistancesIA>();
+            }
+            else {
+                GameObject.Find("sensors_object").AddComponent<GetDistancesPlayer>();
+            }
+
+
+            if (checkpoints.Count == 0)
                 return;
             
             Object[] allRacerArray = FindObjectsOfType<Object> ().Where (x => x is IRacer).ToArray ();
@@ -209,6 +220,12 @@ namespace KartGame.Track
                         racer.DisableControl ();
                         racer.PauseTimer ();
                     }
+
+                    if (PlayerPrefs.GetString("IA") == "false") {
+                        GetDistancesPlayer getDistances = GameObject.Find("sensors_object").GetComponent<GetDistancesPlayer>();
+                        getDistances.PostTrainingUnits();
+                        getDistances.ClearTrainingUnits();
+                    }
                 }
 
                 if (CanEndRace())
@@ -226,18 +243,9 @@ namespace KartGame.Track
             {
                 if (racerNextCheckpoint.Key.GetCurrentLap() < raceLapTotal)
                 {
-                    GetDistances getDistances = GameObject.Find("sensors_object").GetComponent<GetDistances>();
-                    getDistances.PostTrainingUnits();
-                    getDistances.ClearTrainingUnits();
                     return false;
                 }
             }
-            /*
-            GetDistances getDistances = GameObject.Find("sensors_object").GetComponent<GetDistances>();
-            getDistances.PostTrainingUnits();
-            getDistances.ClearTrainingUnits();
-            */
-
             return true;
         }
 

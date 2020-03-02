@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using KartGame.Track;
+using KartGame.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using Object = UnityEngine.Object;
@@ -118,7 +119,24 @@ namespace KartGame.KartSystems
 
         void Start ()
         {
-            m_Input = input as IInput;
+            if (PlayerPrefs.GetString("input") == "" || PlayerPrefs.GetString("input") == null)
+            {
+                m_Input = GetComponent<KeyboardInput>();
+            } else
+            {
+                switch (PlayerPrefs.GetString("input"))
+                {
+                    case "keyboard":
+                       m_Input = GetComponent<KeyboardInput>();
+                        break;
+                    case "steeringWheel":
+                        m_Input = GetComponent<SteeringInput>();
+                        break;
+                    case "gamepad":
+                        m_Input = GetComponent<GamepadInput>();
+                        break;
+                }
+            }
 
             m_Rigidbody = GetComponent<Rigidbody> ();
             m_Capsule = GetComponent<CapsuleCollider> ();
@@ -133,7 +151,25 @@ namespace KartGame.KartSystems
 
         void FixedUpdate ()
         {
-            m_Input = input as IInput;
+            if (PlayerPrefs.GetString("input") == "" || PlayerPrefs.GetString("input") == null)
+            {
+                m_Input = GetComponent<KeyboardInput>();
+            }
+            else
+            {
+                switch (PlayerPrefs.GetString("input"))
+                {
+                    case "keyboard":
+                        m_Input = GetComponent<KeyboardInput>();
+                        break;
+                    case "steeringWheel":
+                        m_Input = GetComponent<SteeringInput>();
+                        break;
+                    case "gamepad":
+                        m_Input = GetComponent<GamepadInput>();
+                        break;
+                }
+            }
 
             if (Mathf.Approximately (Time.timeScale, 0f))
                 return;
@@ -148,6 +184,16 @@ namespace KartGame.KartSystems
             }
             
             m_RigidbodyPosition = m_Rigidbody.position;
+
+            if (PlayerPrefs.GetFloat("kartAcceleration") > 0) {
+                print(PlayerPrefs.GetFloat("kartAcceleration"));
+                defaultStats.acceleration = PlayerPrefs.GetFloat("kartAcceleration");
+            }
+
+            if (PlayerPrefs.GetFloat("kartSpeed") > 0)
+            {
+                defaultStats.topSpeed = PlayerPrefs.GetFloat("kartSpeed");
+            }
 
             KartStats.GetModifiedStats (m_CurrentModifiers, defaultStats, ref m_ModifiedStats);
             ClearTempModifiers ();
