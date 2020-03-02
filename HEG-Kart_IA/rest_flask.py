@@ -26,12 +26,13 @@ model.add(Dense(units=2, activation='softsign'))
 
 model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
 '''
-inputs = Input(shape=(5,))
 
-turnBranch = Dense(units=50, activation='relu', input_dim=inputs.shape[0])(inputs)
+inputs = Input(shape=(12,))
+
+turnBranch = Dense(units=20, activation='relu', input_dim=inputs.shape[0])(inputs)
 turnBranch = Dense(units=1, activation='softsign', name="turn_output")(turnBranch)
 
-accelerationBranch = Dense(units=50, activation='relu', input_dim=inputs.shape[0])(inputs)
+accelerationBranch = Dense(units=20, activation='relu', input_dim=inputs.shape[0])(inputs)
 accelerationBranch = Dense(units=1, activation='softsign', name="acceleration_output")(accelerationBranch)
 
 model = Model(inputs=inputs, outputs=[turnBranch, accelerationBranch])
@@ -43,9 +44,7 @@ losses = {
 
 model.compile(loss=losses, optimizer='adam', metrics=['accuracy'])
 
-
 graph = tf.get_default_graph()
-
 '''
 127.0.0.1:5000/api/save?name=test - Ici le modèle aura un nom spécifique
 127.0.0.1:5000/api/save - Ici le modèle aura le nom model_weights
@@ -134,7 +133,7 @@ def trainModel():
 
         '''
         # Get inputs and outputs format for MLP with two branches and two loss (one for acceleration and one for turn)
-        model.fit(distances, {"turn_output": turn, "acceleration_output": acceleration}, epochs=200, batch_size=32)
+        model.fit(distances, {"turn_output": turn, "acceleration_output": acceleration}, epochs=3, batch_size=32)
 
     return 'finished training', 200
 
@@ -152,11 +151,9 @@ def getPrediction():
         for i in range(len(json_inputs)):
             inputs[0][i] = json_inputs[i]
         predictions = model.predict(inputs)
-        print(predictions[0][0][0])
 
         # Response format for bi branch MLP
         json_response = jsonify(dict(turn=str(predictions[0][0][0]), acceleration=str(predictions[1][0][0])))
-
         # Response format for simple MLP
         # json_response = jsonify(dict(turn=str(predictions[0][0]), acceleration=str(predictions[0][1])))
     return json_response
@@ -170,18 +167,18 @@ def simpleMlpInputsOutputsFormat(distances, turn, acceleration):
     return distances, outputs
 
 if __name__ == '__main__':
-    print("run main")
+    #print("run main")
 
     ## Config for TF-GPU
-    config = tf.ConfigProto(
-        gpu_options=tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
-        # device_count = {'GPU': 1}
-    )
-    print("After config")
+    #config = tf.ConfigProto(
+    #    gpu_options=tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
+    #    # device_count = {'GPU': 1}
+    #)
+    #print("After config")
     #config.gpu_options.allow_growth = True
     #session = tf.Session(config=config)
-    print("After session")
+    #print("After session")
     ##
 
     app.run(host='0.0.0.0', debug=True)
-    print("After app run")
+    #print("After app run")

@@ -36,34 +36,22 @@ public class GetDistancesIA : MonoBehaviour
 
         // Set up out 5 feelers for undertanding the world
         Vector3[] feeler = new Vector3[]
-        {
+                {
             transform.TransformDirection(Vector3.left),
             transform.TransformDirection(Vector3.left + Vector3.forward),
-            /*transform.TransformDirection(Vector3.left + Vector3.forward*2),
-            transform.TransformDirection(Vector3.left + Vector3.forward*3),
-            transform.TransformDirection(Vector3.left + Vector3.forward*4),
-            transform.TransformDirection(Vector3.left + Vector3.forward*5),
-            transform.TransformDirection(Vector3.left + Vector3.forward*6),
-            transform.TransformDirection(Vector3.left + Vector3.forward*7),
-            transform.TransformDirection(Vector3.left + Vector3.forward*8),
-            transform.TransformDirection(Vector3.left + Vector3.forward*9),
-            transform.TransformDirection(Vector3.left + Vector3.forward*10),
-            */
+            transform.TransformDirection(Vector3.left * 2 + Vector3.forward),
+            transform.TransformDirection(Vector3.left + Vector3.forward * 2),
+            transform.TransformDirection(Vector3.left + Vector3.forward * 4),
+
             transform.TransformDirection(Vector3.forward),
 
             transform.TransformDirection(Vector3.right + Vector3.forward),
-            /*transform.TransformDirection(Vector3.right + Vector3.forward*2),
-            transform.TransformDirection(Vector3.right + Vector3.forward*3),
-            transform.TransformDirection(Vector3.right + Vector3.forward*4),
-            transform.TransformDirection(Vector3.right + Vector3.forward*5),
-            transform.TransformDirection(Vector3.right + Vector3.forward*6),
-            transform.TransformDirection(Vector3.right + Vector3.forward*7),
-            transform.TransformDirection(Vector3.right + Vector3.forward*8),
-            transform.TransformDirection(Vector3.right + Vector3.forward*9),
-            transform.TransformDirection(Vector3.right + Vector3.forward*10),*/
+            transform.TransformDirection(Vector3.right * 2 + Vector3.forward),
+            transform.TransformDirection(Vector3.right + Vector3.forward * 2),
+            transform.TransformDirection(Vector3.right + Vector3.forward * 4),
             transform.TransformDirection(Vector3.right),
 
-        };
+                };
 
         // Use this to collect all feeler distances, then well pass them through our NN for an output
         float[] inp = new float[feeler.Length];

@@ -173,12 +173,12 @@ if __name__ == '__main__':
     print("run main")
 
     ## Config for TF-GPU
-    config = tf.ConfigProto(
-        gpu_options=tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
-        # device_count = {'GPU': 1}
-    )
-    config.gpu_options.allow_growth = True
-    session = tf.Session(config=config)
+    #config = tf.ConfigProto(
+    #    gpu_options=tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
+    #    # device_count = {'GPU': 1}
+    #)
+    #config.gpu_options.allow_growth = True
+    #session = tf.Session(config=config)
     ##
 
     app.run(host='0.0.0.0', debug=True)

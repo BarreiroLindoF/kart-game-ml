@@ -25,6 +25,7 @@ public class Brain : MonoBehaviour
         float[] distances = GameObject.Find("sensors_object").GetComponent<GetDistancesIA>().CalculateDistances();
         TestingData data = new TestingData();
         data.inputs = new List<float>(distances);
+        data.inputs.Add(GameObject.Find("Kart").GetComponent<Rigidbody>().velocity.magnitude);
         Prediction prediction = await new Service().SendPut(data);
 
         c.m_Acceleration = prediction.acceleration;

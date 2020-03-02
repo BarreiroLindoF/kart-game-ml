@@ -25,7 +25,7 @@ public class GetDistancesPlayer : MonoBehaviour
         frameCount++;
         if (frameCount > 150)
         {
-            if (frameCount % 5 == 0)
+            if (frameCount % 1 == 0)
             {
                 // Set up a raycast hit for knowing what we hit
                 RaycastHit hit;
@@ -52,28 +52,16 @@ public class GetDistancesPlayer : MonoBehaviour
                 {
             transform.TransformDirection(Vector3.left),
             transform.TransformDirection(Vector3.left + Vector3.forward),
-            /*transform.TransformDirection(Vector3.left + Vector3.forward*2),
-            transform.TransformDirection(Vector3.left + Vector3.forward*3),
-            transform.TransformDirection(Vector3.left + Vector3.forward*4),
-            transform.TransformDirection(Vector3.left + Vector3.forward*5),
-            transform.TransformDirection(Vector3.left + Vector3.forward*6),
-            transform.TransformDirection(Vector3.left + Vector3.forward*7),
-            transform.TransformDirection(Vector3.left + Vector3.forward*8),
-            transform.TransformDirection(Vector3.left + Vector3.forward*9),
-            transform.TransformDirection(Vector3.left + Vector3.forward*10),
-            */
+            transform.TransformDirection(Vector3.left * 2 + Vector3.forward),
+            transform.TransformDirection(Vector3.left + Vector3.forward * 2),
+            transform.TransformDirection(Vector3.left + Vector3.forward * 4),
+
             transform.TransformDirection(Vector3.forward),
 
             transform.TransformDirection(Vector3.right + Vector3.forward),
-            /*transform.TransformDirection(Vector3.right + Vector3.forward*2),
-            transform.TransformDirection(Vector3.right + Vector3.forward*3),
-            transform.TransformDirection(Vector3.right + Vector3.forward*4),
-            transform.TransformDirection(Vector3.right + Vector3.forward*5),
-            transform.TransformDirection(Vector3.right + Vector3.forward*6),
-            transform.TransformDirection(Vector3.right + Vector3.forward*7),
-            transform.TransformDirection(Vector3.right + Vector3.forward*8),
-            transform.TransformDirection(Vector3.right + Vector3.forward*9),
-            transform.TransformDirection(Vector3.right + Vector3.forward*10),*/
+            transform.TransformDirection(Vector3.right * 2 + Vector3.forward),
+            transform.TransformDirection(Vector3.right + Vector3.forward * 2),
+            transform.TransformDirection(Vector3.right + Vector3.forward * 4),
             transform.TransformDirection(Vector3.right),
 
                 };
@@ -95,8 +83,9 @@ public class GetDistancesPlayer : MonoBehaviour
                     // Draw the feelers in the Scene mode
 
                 }
-                trainingData.inputs.Add(new List<float>(inp));
-
+                List<float> x = new List<float>(inp);
+                x.Add(GameObject.Find("Kart").GetComponent<Rigidbody>().velocity.magnitude);
+                trainingData.inputs.Add(x);
                 // Add user acceleration and turn in function of the input used
                 switch (PlayerPrefs.GetString("input"))
                 {
