@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -9,16 +10,53 @@ public class MainMenu : MonoBehaviour
     [Tooltip("A collection of UI panels that could be set active or inactive")]
     public GameObject[] panels;
 
+    [Tooltip("An acceleration slider to be able to reference it later when it is inactive")]
+    public Slider accelerationSlider;
+
+    [Tooltip("A speed slider to be able to reference it later when it is inactive")]
+    public Slider speedSlider;
+
+    [Tooltip("A fence toggle to enable on fence hit restart mode")]
+    public Toggle fenceToggle;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        PlayerPrefs.DeleteAll();
+        if (PlayerPrefs.GetString("keepPlayerPref") != "true") {
+            PlayerPrefs.DeleteAll();
+        }
+        
+        float speed = PlayerPrefs.GetFloat("kartSpeed");
+        if (speed > 0) {
+            speedSlider.value = speed;
+        }
+        float acceleration = PlayerPrefs.GetFloat("kartAcceleration");
+        if (acceleration > 0)
+        {
+            accelerationSlider.value = acceleration;
+        }
+        string fenceMode = PlayerPrefs.GetString("fences");
+        if (fenceMode == "True")
+        {
+            fenceToggle.isOn = true;
+        }
+        else
+        {
+            fenceToggle.isOn = false;
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void setFences(bool active)
+    {
+        PlayerPrefs.SetString("fences", active.ToString());
     }
 
     public void setActive(int index)
@@ -89,6 +127,7 @@ public class MainMenu : MonoBehaviour
 
     public void leaveGame()
     {
+        PlayerPrefs.SetString("keepPlayerPref", "false");
         Application.Quit();
     }
 }

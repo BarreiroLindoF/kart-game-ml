@@ -40,6 +40,11 @@ namespace KartGame.Track
         float GetLapTime ();
 
         /// <summary>
+        /// Sets the current lap time.
+        /// </summary>
+        void ResetLapTime();
+
+        /// <summary>
         /// Gets the total time spent in the race so far.
         /// </summary>
         float GetRaceTime ();

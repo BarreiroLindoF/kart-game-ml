@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using KartGame.KartSystems;
+using KartGame.Timeline;
 using UnityEngine;
 
 namespace KartGame.Track
@@ -252,6 +253,12 @@ namespace KartGame.Track
         void RacerHitIncorrectCheckpoint (IRacer racer, Checkpoint checkpoint)
         {
             // No implementation required by template.
+        }
+
+        public void RestartRace()
+        {
+            GameObject.FindObjectOfType<TimeDisplay>().RestartTimer();
+            StartRace();
         }
 
         /// <summary>

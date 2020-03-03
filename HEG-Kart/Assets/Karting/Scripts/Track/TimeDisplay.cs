@@ -297,5 +297,10 @@ namespace KartGame.Track
         {
             m_Racer = newRacer;
         }
+
+        public void RestartTimer()
+        {
+            m_Racer.ResetLapTime();
+        }
     }
 }

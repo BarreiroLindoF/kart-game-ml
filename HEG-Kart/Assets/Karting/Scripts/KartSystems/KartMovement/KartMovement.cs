@@ -186,7 +186,6 @@ namespace KartGame.KartSystems
             m_RigidbodyPosition = m_Rigidbody.position;
 
             if (PlayerPrefs.GetFloat("kartAcceleration") > 0) {
-                print(PlayerPrefs.GetFloat("kartAcceleration"));
                 defaultStats.acceleration = PlayerPrefs.GetFloat("kartAcceleration");
             }
 

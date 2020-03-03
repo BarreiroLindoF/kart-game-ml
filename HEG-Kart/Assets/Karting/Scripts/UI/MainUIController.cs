@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace KartGame.UI
 {
@@ -13,6 +14,37 @@ namespace KartGame.UI
     {
         [Tooltip("A collection of UI panels, one of which will be active at a time.")]
         public GameObject[] panels;
+
+        [Tooltip("An acceleration slider to be able to reference it later when it is inactive")]
+        public Slider accelerationSlider;
+
+        [Tooltip("A speed slider to be able to reference it later when it is inactive")]
+        public Slider speedSlider;
+
+        [Tooltip("A fence toggle to enable on fence hit restart mode")]
+        public Toggle fenceToggle;
+
+        void Start()
+        {
+            float speed = PlayerPrefs.GetFloat("kartSpeed");
+            if (speed > 0)
+            {
+                speedSlider.value = speed;
+            }
+            float acceleration = PlayerPrefs.GetFloat("kartAcceleration");
+            if (acceleration > 0)
+            {
+                accelerationSlider.value = acceleration;
+            }
+            string fenceMode = PlayerPrefs.GetString("fences");
+            if (fenceMode == "True")
+            {
+                fenceToggle.isOn = true;
+            } else
+            {
+                fenceToggle.isOn = false;
+            }
+        }
 
         /// <summary>
         /// Turns off all the panels except the one at the given index which is turned on.
@@ -30,6 +62,10 @@ namespace KartGame.UI
 
         public  void LoadLevel(string levelName)
         {
+            if (levelName == "MainMenu")
+            {
+                PlayerPrefs.SetString("keepPlayerPref", "true");
+            }
             SceneManager.LoadScene(levelName);
         }
 
@@ -64,6 +100,11 @@ namespace KartGame.UI
         public void setAcceleration(float acceleration)
         {
             PlayerPrefs.SetFloat("kartAcceleration", acceleration);
+        }
+
+        public void setFences(bool active)
+        {
+            PlayerPrefs.SetString("fences" , active.ToString());
         }
 
         void OnEnable()

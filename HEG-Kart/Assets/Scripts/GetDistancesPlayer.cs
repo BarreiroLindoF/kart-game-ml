@@ -1,4 +1,5 @@
 ﻿using KartGame.KartSystems;
+using KartGame.Track;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,17 @@ public class GetDistancesPlayer : MonoBehaviour
 
     int frameCount = 0;
 
+    Vector3 startingPos;
+    Quaternion startingRot;
+
     // Start is called before the first frame update
+
+    void Awake()
+    {
+        startingPos = this.transform.position;
+        startingRot = this.transform.rotation;
+    }
+
     void Start()
     {
         // trainingUnits = new List<TrainUnit>();
@@ -78,6 +89,20 @@ public class GetDistancesPlayer : MonoBehaviour
                         inp[i] = hit.distance;
                         Debug.DrawRay(transform.position, feeler[i] * 5, Color.cyan);
 
+                        // Reset Kart position if it is a fence and if fence mode is enable
+                        if (PlayerPrefs.GetString("fences") == "True") {
+                            bool isCheckpoint = hit.collider.gameObject.GetComponent<Checkpoint>() != null;
+                            if (hit.distance < .8f && !isCheckpoint)
+                            {
+                                TrackManager trackManager = GameObject.FindObjectOfType<TrackManager>();
+                                KartMovement kart = GameObject.FindObjectOfType<KartMovement>();
+                                kart.transform.position = startingPos;
+                                kart.transform.rotation = startingRot;
+                                kart.ForceMove(Vector3.zero, Quaternion.identity);
+                                trackManager.RestartRace();
+                                ClearTrainingUnits();
+                            }
+                        }
                     }
 
                     // Draw the feelers in the Scene mode

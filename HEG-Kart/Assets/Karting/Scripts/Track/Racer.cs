@@ -66,6 +66,11 @@ namespace KartGame.Track
             return m_Timer;
         }
 
+        public void ResetLapTime()
+        {
+            m_Timer = 0;
+        }
+
         public float GetRaceTime ()
         {
             float raceTime = m_Timer;
