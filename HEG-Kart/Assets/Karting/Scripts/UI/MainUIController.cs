@@ -24,6 +24,9 @@ namespace KartGame.UI
         [Tooltip("A fence toggle to enable on fence hit restart mode")]
         public Toggle fenceToggle;
 
+        [Tooltip("An input field to set the server address")]
+        public InputField serverAddressInput;
+
         void Start()
         {
             float speed = PlayerPrefs.GetFloat("kartSpeed");
@@ -44,6 +47,15 @@ namespace KartGame.UI
             {
                 fenceToggle.isOn = false;
             }
+            string serverAddress = PlayerPrefs.GetString("serverIP");
+            if (serverAddress != "")
+            {
+                print("address was already setted and was : ");
+                print(serverAddress);
+                serverAddressInput.text = serverAddress;
+            }
+
+
         }
 
         /// <summary>
@@ -67,6 +79,13 @@ namespace KartGame.UI
                 PlayerPrefs.SetString("keepPlayerPref", "true");
             }
             SceneManager.LoadScene(levelName);
+        }
+
+        public void setServerAddress(string address)
+        {
+            PlayerPrefs.SetString("serverIP", address);
+            print("address changed to :");
+            print(address);
         }
 
         public void ChangeControl(string control_name)

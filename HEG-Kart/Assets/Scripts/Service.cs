@@ -12,8 +12,8 @@ class Service
     //private readonly string predictRoute = "http://127.0.0.1:5000/api/predict";
 
     /*Production*/
-    private readonly string trainRoute = "http://192.168.1.1:5000/api/train";
-    private readonly string predictRoute = "http://192.168.1.1:5000/api/train";
+    private readonly string trainRoute = "/api/train";
+    private readonly string predictRoute = "/api/predict";
 
 
     public void SendPost(TrainingData trainingData)
@@ -23,7 +23,7 @@ class Service
         string json = JsonConvert.SerializeObject(trainingData);
 
         // JSON does not work with POST, so I need to use PUT
-        UnityWebRequest www = UnityWebRequest.Put(trainRoute, json);
+        UnityWebRequest www = UnityWebRequest.Put(PlayerPrefs.GetString("serverIP") + trainRoute, json);
         www.SetRequestHeader("Content-Type", "application/json");
         www.SendWebRequest();
 
@@ -45,7 +45,7 @@ class Service
         string json = JsonConvert.SerializeObject(testingData);
 
         RestClient client = new RestClient();
-        RestRequest request = new RestRequest(predictRoute, DataFormat.Json);
+        RestRequest request = new RestRequest(PlayerPrefs.GetString("serverIP") + predictRoute, DataFormat.Json);
         request.AddJsonBody(json);
         client.Put(request);
         IRestResponse response = await client.ExecuteAsync(request);

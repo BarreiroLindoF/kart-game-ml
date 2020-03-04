@@ -19,6 +19,9 @@ public class MainMenu : MonoBehaviour
     [Tooltip("A fence toggle to enable on fence hit restart mode")]
     public Toggle fenceToggle;
 
+    [Tooltip("An input field to set the server address")]
+    public InputField serverAddressInput;
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +47,13 @@ public class MainMenu : MonoBehaviour
         else
         {
             fenceToggle.isOn = false;
+        }
+        string serverAddress = PlayerPrefs.GetString("serverIP");
+        if (serverAddress != "")
+        {
+            print("address was already setted and was : ");
+            print(serverAddress);
+            serverAddressInput.text = serverAddress;
         }
 
     }
@@ -124,6 +134,13 @@ public class MainMenu : MonoBehaviour
             }
             panels[0].SetActive(true);
         }
+    }
+
+    public void setServerAddress(string address)
+    {
+        PlayerPrefs.SetString("serverIP", address);
+        print("address changed to :");
+        print(address);
     }
 
     public void leaveGame()
