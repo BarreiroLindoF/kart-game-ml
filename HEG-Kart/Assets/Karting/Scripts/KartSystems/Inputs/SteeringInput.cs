@@ -48,18 +48,17 @@ namespace KartGame.KartSystems
 
         private void Start()
         {
-            //print(LogitechGSDK.LogiSteeringInitialize(false));
+            LogitechGSDK.LogiLedInit();
+            LogitechGSDK.LogiSteeringInitialize(false);
         }
 
         void Update ()
         {
-
             if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0)) {
                 LogitechGSDK.DIJOYSTATE2ENGINES rec;
                 rec = LogitechGSDK.LogiGetStateUnity(0);
 
                 xAxes = rec.lX / 32768f; // -1 0 1
-
                 m_Steering = xAxes;
                 
                 m_Acceleration = ((-rec.lY + 32767f) / 65535f) + ((rec.lRz - 32767f) / 65535f);
@@ -73,7 +72,6 @@ namespace KartGame.KartSystems
                 m_BoostPressed = false;
                 m_FirePressed = false;
             }
-
         }
 
         void FixedUpdate ()

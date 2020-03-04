@@ -139,6 +139,7 @@ public class GetDistancesPlayer : MonoBehaviour
 
     public void PostTrainingUnits()
     {
+        print(trainingData.turnOutputs[trainingData.turnOutputs.Count-1]);
         new Service().SendPost(trainingData);
     }
 

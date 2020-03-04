@@ -8,19 +8,16 @@ using System.Threading.Tasks;
 class Service
 {
     /*Developpement*/
-    private readonly string trainRoute = "http://127.0.0.1:5000/api/train";
-    private readonly string predictRoute = "http://127.0.0.1:5000/api/predict";
+    //private readonly string trainRoute = "http://127.0.0.1:5000/api/train";
+    //private readonly string predictRoute = "http://127.0.0.1:5000/api/predict";
 
     /*Production*/
-    //private readonly string trainRoute = "http://192.168.1.1:5000/api/train";
-    //private readonly string predictRoute = "http://192.168.1.1:5000/api/train";
+    private readonly string trainRoute = "http://192.168.1.1:5000/api/train";
+    private readonly string predictRoute = "http://192.168.1.1:5000/api/train";
 
 
     public void SendPost(TrainingData trainingData)
     {
-        Debug.Log(trainingData.inputs.Count);
-        Debug.Log(trainingData.turnOutputs.Count);
-        Debug.Log(trainingData.accelerationOutputs.Count);
         if (trainingData.inputs.Count == 0 || trainingData.turnOutputs.Count == 0 || trainingData.accelerationOutputs.Count == 0) return;
 
         string json = JsonConvert.SerializeObject(trainingData);

@@ -153,6 +153,7 @@ namespace KartGame.KartSystems
         {
             if (PlayerPrefs.GetString("input") == "" || PlayerPrefs.GetString("input") == null)
             {
+                print("keyboard by default");
                 m_Input = GetComponent<KeyboardInput>();
             }
             else

@@ -43,9 +43,9 @@ namespace KartGame.KartSystems
 
         void Update ()
         {
-            if (Input.GetButton ("Brake"))
+            if (Input.GetButton("Brake"))
                 m_Acceleration = -1f;
-            else if (Input.GetButton ("Accelerate"))
+            else if (Input.GetButton("Accelerate"))
                 m_Acceleration = 1f;
             else
                 m_Acceleration = 0f;

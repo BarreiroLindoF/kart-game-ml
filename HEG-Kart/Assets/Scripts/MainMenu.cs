@@ -97,6 +97,7 @@ public class MainMenu : MonoBehaviour
                 PlayerPrefs.SetString("input", "keyboard");
                 break;
             case "steeringWheel":
+                print("wheel selected");
                 PlayerPrefs.SetString("input", "steeringWheel");
                 break;
             case "gamepad":
