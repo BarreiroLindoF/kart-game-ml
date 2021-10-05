@@ -12,6 +12,6 @@ When all dependencies are installed, you can run the main python Neural Network 
 
 Now the Neural Network is ready to receive data and train on it on your machine. You can now launch the game and just go to the "Settings" menu to change the ip address of the server where the Neural Network is running.
 
-Once you played some circuits yourself and you saw the Neural Network training in the console of the server, you can either launch another instance of the game or just switch the "Player" mode to "IA" in your current game party.
+Once you played some circuits yourself and you saw in the console of the server the Neural Network training, you can either launch another instance of the game or just switch the "Player" mode to "IA" in your current game party.
 
 You will now see the IA who's sending request to the trained Neural Network to know which action to do every frame. And...that's it ! Feel free to download the project and test your own model by changing the code in the *rest_flask.py* python file.
